@@ -1,5 +1,4 @@
-```jsx
-import './App.css';
+import "./App.css";
 import axios from "axios";
 import { useState } from "react";
 import {
@@ -9,12 +8,11 @@ import {
   Tooltip,
   ResponsiveContainer
 } from "recharts";
-import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FaShieldAlt } from "react-icons/fa";
 
 function App() {
-
   const [history, setHistory] = useState([]);
   const [amount, setAmount] = useState("");
   const [result, setResult] = useState(null);
@@ -23,20 +21,19 @@ function App() {
   const chartData = [
     {
       name: "Safe",
-      value: history.filter(h => h.riskLevel === "LOW").length
+      value: history.filter((h) => h.riskLevel === "LOW").length
     },
     {
       name: "Medium",
-      value: history.filter(h => h.riskLevel === "MEDIUM").length
+      value: history.filter((h) => h.riskLevel === "MEDIUM").length
     },
     {
       name: "High",
-      value: history.filter(h => h.riskLevel === "HIGH").length
+      value: history.filter((h) => h.riskLevel === "HIGH").length
     }
   ];
 
   const analyze = async () => {
-
     if (!amount || isNaN(amount) || Number(amount) <= 0) {
       alert("Please enter a valid amount");
       return;
@@ -71,7 +68,6 @@ function App() {
           ...res.data
         }
       ]);
-
     } catch (error) {
       console.error(error);
       alert("Backend Error");
@@ -89,12 +85,11 @@ function App() {
 
   return (
     <div className="container">
+      <ToastContainer />
 
       <div className="card">
-
         <h1>
-          <FaShieldAlt />
-          Financial Fraud Analyzer
+          <FaShieldAlt /> Financial Fraud Analyzer
         </h1>
 
         <p className="subtitle">
@@ -115,7 +110,6 @@ function App() {
         {/* RESULT */}
         {result && (
           <div className="resultBox">
-
             <h2 style={{ color: getColor() }}>
               {result.riskLevel} RISK
             </h2>
@@ -127,7 +121,7 @@ function App() {
                   width: `${result.fraudScore * 100}%`,
                   background: getColor()
                 }}
-              />
+              ></div>
             </div>
 
             <p>
@@ -138,14 +132,12 @@ function App() {
             <p>
               <strong>Action:</strong> {result.action}
             </p>
-
           </div>
         )}
 
         {/* HISTORY */}
         {history.length > 0 && (
           <div className="history">
-
             <h2>Transaction History</h2>
 
             <table>
@@ -162,30 +154,29 @@ function App() {
                 {history.map((item, index) => (
                   <tr key={index}>
                     <td>₹{item.amount}</td>
+
                     <td>
                       {item.fraudScore !== undefined
-                        ? (item.fraudScore * 100).toFixed(0) + "%"
+                        ? `${(item.fraudScore * 100).toFixed(0)}%`
                         : "N/A"}
                     </td>
+
                     <td>{item.riskLevel}</td>
                     <td>{item.action}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-
           </div>
         )}
 
         {/* CHART */}
         {history.length > 0 && (
           <div style={{ marginTop: "40px" }}>
-
             <h2>Fraud Analytics</h2>
 
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
-
                 <Pie
                   data={chartData}
                   dataKey="value"
@@ -198,18 +189,13 @@ function App() {
                 </Pie>
 
                 <Tooltip />
-
               </PieChart>
             </ResponsiveContainer>
-
           </div>
         )}
-
       </div>
-
     </div>
   );
 }
 
 export default App;
-```
