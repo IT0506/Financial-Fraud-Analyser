@@ -1,3 +1,4 @@
+```jsx
 import './App.css';
 import axios from "axios";
 import { useState } from "react";
@@ -10,11 +11,7 @@ import {
 } from "recharts";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {
-  FaShieldAlt,
-  FaExclamationTriangle,
-  FaCheckCircle
-} from "react-icons/fa";
+import { FaShieldAlt } from "react-icons/fa";
 
 function App() {
 
@@ -22,10 +19,7 @@ function App() {
   const [amount, setAmount] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-const total = history.length;
 
-const fraudPercent =
-  (history.filter(h => h.riskLevel === "HIGH").length / total) * 100;
   const chartData = [
     {
       name: "Safe",
@@ -63,9 +57,10 @@ const fraudPercent =
         "http://localhost:8000/predict",
         payload
       );
+
       if (res.data.riskLevel === "HIGH") {
-  toast.error("High Risk Fraud Detected!");
-}
+        toast.error("High Risk Fraud Detected!");
+      }
 
       setResult(res.data);
 
@@ -98,9 +93,9 @@ const fraudPercent =
       <div className="card">
 
         <h1>
-  <FaShieldAlt />
-  Financial Fraud Analyzer
-</h1>
+          <FaShieldAlt />
+          Financial Fraud Analyzer
+        </h1>
 
         <p className="subtitle">
           AI-powered fraud detection system
@@ -217,3 +212,4 @@ const fraudPercent =
 }
 
 export default App;
+```
